@@ -6,7 +6,7 @@ export const ListadoPacientes = () => {
       <h2 className="font-black text-3xl text-center">Listado Pacientes</h2>
 
       <p className="text-xl mt-5 mb-10 text-center">
-        Administra tus {""}
+        Administrar {""}
         <span className="text-indigo-500 font-bold" >Pacientes y citas</span>
       </p>
 
