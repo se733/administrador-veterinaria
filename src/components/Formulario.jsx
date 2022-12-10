@@ -23,6 +23,7 @@ export const Formulario = ({ pacientes, setPacientes }) => {
 
 
     //buscar otra forma de reiniciar el formulario
+    //intentar usar useForm
     setNombre('')
     setPropietario('')
     setEmail('')
