@@ -21,6 +21,8 @@ export const Formulario = ({ pacientes, setPacientes }) => {
 
     setPacientes([...pacientes, objetoPacientes]);
 
+
+    //buscar otra forma de reiniciar el formulario
     setNombre('')
     setPropietario('')
     setEmail('')
