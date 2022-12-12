@@ -9,6 +9,14 @@ export const Formulario = ({ pacientes, setPacientes }) => {
   const [sintomas, setSintomas] = useState("");
   const [error, setError] = useState(false);
 
+  const generarId = () => {
+    const ramdom = Math.random().toString(36).substring(2)
+    const fecha = Date.now().toString(36)
+
+    return ramdom + fecha
+  } 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if ([nombre, propietario, email, fecha, sintomas].includes("")) {
@@ -17,7 +25,7 @@ export const Formulario = ({ pacientes, setPacientes }) => {
     }
     setError(false);
 
-    const objetoPacientes = { nombre, propietario, email, fecha, sintomas };
+    const objetoPacientes = { nombre, propietario, email, fecha, sintomas, id: generarId() };
 
     setPacientes([...pacientes, objetoPacientes]);
 
