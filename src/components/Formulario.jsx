@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Error } from "./Error";
 
-export const Formulario = ({ pacientes, setPacientes }) => {
+export const Formulario = ({
+  pacientes,
+  setPacientes,
+  paciente,
+  setPaciente,
+}) => {
   const [nombre, setNombre] = useState("");
   const [propietario, setPropietario] = useState("");
   const [email, setEmail] = useState("");
@@ -9,13 +14,22 @@ export const Formulario = ({ pacientes, setPacientes }) => {
   const [sintomas, setSintomas] = useState("");
   const [error, setError] = useState(false);
 
+  useEffect(() => {
+    if (Object.keys(paciente).length > 0) {
+      setNombre(paciente.nombre);
+      setPropietario(paciente.propietario);
+      setEmail(paciente.email);
+      setFecha(paciente.fecha);
+      setSintomas(paciente.sintomas);
+    }
+  }, [paciente]);
+
   const generarId = () => {
-    const ramdom = Math.random().toString(36).substring(2)
-    const fecha = Date.now().toString(36)
+    const ramdom = Math.random().toString(36).substring(2);
+    const fecha = Date.now().toString(36);
 
-    return ramdom + fecha
-  } 
-
+    return ramdom + fecha;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,18 +39,35 @@ export const Formulario = ({ pacientes, setPacientes }) => {
     }
     setError(false);
 
-    const objetoPacientes = { nombre, propietario, email, fecha, sintomas, id: generarId() };
+    const objetoPacientes = {
+      nombre,
+      propietario,
+      email,
+      fecha,
+      sintomas,
+      // id: generarId(),
+    };
 
-    setPacientes([...pacientes, objetoPacientes]);
+    if (paciente.id) {
+      objetoPacientes.id = paciente.id;
+      const pacientesActualizados = pacientes.map((pacienteState) =>
+        pacienteState.id === paciente.id ? objetoPacientes : pacienteState
+      );
+      setPacientes(pacientesActualizados);
+      setPaciente({});
 
+    } else {
+      objetoPacientes.id = generarId();
+      setPacientes([...pacientes, objetoPacientes]);
+    }
 
     //buscar otra forma de reiniciar el formulario
     //intentar usar useForm
-    setNombre('')
-    setPropietario('')
-    setEmail('')
-    setFecha('')
-    setSintomas('')
+    setNombre("");
+    setPropietario("");
+    setEmail("");
+    setFecha("");
+    setSintomas("");
   };
 
   return (
@@ -51,7 +82,7 @@ export const Formulario = ({ pacientes, setPacientes }) => {
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
       >
-        {error && <Error mensaje="Por favor completar todos campos"/>}
+        {error && <Error mensaje="Por favor completar todos campos" />}
         <div className="mb-5">
           <label
             htmlFor="mascota"
@@ -135,6 +166,7 @@ export const Formulario = ({ pacientes, setPacientes }) => {
         <input
           type="submit"
           className="bg-indigo-500 w-full p-3 text-white uppercase font-bold hover:bg-indigo-600 cursor-pointer transition-all"
+          value={paciente.id ? "Editar paciente" : "Agregar paciente"}
         />
       </form>
     </div>

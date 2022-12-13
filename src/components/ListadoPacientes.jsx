@@ -1,6 +1,6 @@
 import { Paciente } from "./Paciente";
 
-export const ListadoPacientes = ({ pacientes }) => {
+export const ListadoPacientes = ({ pacientes, setPaciente, eliminarPacientes}) => {
   return (
     <div className="md:w-1/2 lg:w-3/5 md:h-screen ">
       <h2 className="font-black text-3xl text-center">Listado Pacientes</h2>
@@ -10,8 +10,13 @@ export const ListadoPacientes = ({ pacientes }) => {
         <span className="text-indigo-500 font-bold">Pacientes y citas</span>
       </p>
 
-      {pacientes.map( paciente => (
-        <Paciente key={paciente.id} paciente={paciente} />
+      {pacientes.map((paciente) => (
+        <Paciente
+          key={paciente.id}
+          paciente={paciente}
+          setPaciente={setPaciente}
+          eliminarPacientes={eliminarPacientes}
+        />
       ))}
     </div>
   );
