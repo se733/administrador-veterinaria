@@ -7,6 +7,7 @@ function App() {
   const [pacientes, setPacientes] = useState([]);
   const [paciente, setPaciente] = useState({});
 
+  //mantener al recargar
   useEffect(() => {
     const obtenerLS = () => {
       const pacientesLS = JSON.parse(localStorage.getItem("pacientes"));
